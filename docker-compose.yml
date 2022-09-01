@@ -1,0 +1,42 @@
+version: '3.0.0'
+
+services:
+
+  qo-grpc-db: 
+    image: 'postgres:13.0-alpine'
+    container_name: 'go-grpc-db'
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    restart: 'unless-stopped'
+    env_file:
+      - '.env'
+    volumes:
+      - './.postgres-data:/var/lib/postgresql/data'
+
+  go-grpc-users:
+    build: 
+      context: .
+      dockerfile: Dockerfile   
+      target: server_users
+    image: go-grpc-users
+    ports: 
+      - ${USER_APP_PORT}:${USER_APP_PORT}
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - go-grpc-db
+
+  go-grpc-articles:
+    build: 
+      context: .
+      dockerfile: Dockerfile   
+      target: server_articles
+    image: go-grpc-articles
+    ports: 
+      - ${ARTICLE_APP_PORT}:${ARTICLE_APP_PORT}
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - go-grpc-db
