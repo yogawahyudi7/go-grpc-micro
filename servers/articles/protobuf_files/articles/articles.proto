@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option go_package = "go-grpc-micro/servers/articles/protobuf_files/articles";
+package articles;
+
+message Request{    
+    string after_id = 1;
+    string content = 2;
+    string id = 3;
+    int32 page = 4;
+    string order = 5;
+    string sort = 6;
+    string title = 7;
+    string user_id = 8;   
+}
+
+message Meta{
+    int32 total = 1;
+    int32 total_page = 2;
+}
+
+message Message{
+    string message = 1;
+}
+
+message Data_Users{
+    string id = 1;
+    string name = 2;
+    string image_url = 3;
+}
+
+message Data_Articles{
+    string id = 1;
+    string title = 2;
+    string content = 3;
+    Data_Users user = 4;
+    string created_at = 5;
+    string updated_at = 6;
+    string deleted_at = 7;
+}
+
+message Response{
+    Meta meta = 1;
+    repeated Data_Articles articles = 2;
+    Message message = 3;
+}
+
+service Users{
+    rpc Create(Request) returns (Response);
+    rpc Read(Request) returns (Response);
+    rpc Update(Request) returns (Response);
+    rpc Delete(Request) returns (Response);
+}
