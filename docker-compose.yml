@@ -12,6 +12,7 @@ services:
       - '.env'
     volumes:
       - './.postgres-data:/var/lib/postgresql/data'
+      - './servers/users/entities/migrations/000001_create_extension.up.sql:/docker-entrypoint-initdb.d/000001_create_extension.up.sql'
 
   go-grpc-users:
     build: 
