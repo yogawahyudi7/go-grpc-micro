@@ -2,7 +2,7 @@ package main
 
 import (
 	configs "go-grpc-micro/servers/users/configs"
-	user_ctrl "go-grpc-micro/servers/users/delivery/controlles"
+	user_ctrl "go-grpc-micro/servers/users/delivery/controllers"
 	routes "go-grpc-micro/servers/users/delivery/routes"
 	pb_user "go-grpc-micro/servers/users/protobuf_files/users"
 	repo_user "go-grpc-micro/servers/users/repository/users"

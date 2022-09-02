@@ -3,7 +3,7 @@ package routes
 import (
 	"context"
 	"fmt"
-	user_ctrl "go-grpc-micro/servers/users/delivery/controlles"
+	user_ctrl "go-grpc-micro/servers/users/delivery/controllers"
 	pb_user "go-grpc-micro/servers/users/protobuf_files/users"
 	helpers "go-grpc-micro/servers/users/utils/generic"
 	"log"
