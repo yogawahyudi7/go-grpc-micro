@@ -143,27 +143,25 @@ func (userServer *ManagementServer) Update(ctx context.Context, in *pb_user.Requ
 	helpers.UUID_Data = []helpers.UUID_Detail{}
 	new_name, new_image_url := "", ""
 
-	if in.Id != "" {
-		helpers.UUID_Data = append(helpers.UUID_Data, helpers.UUID_Detail{
-			UUID: in.Id,
-			Name: "User",
-		})
+	helpers.UUID_Data = append(helpers.UUID_Data, helpers.UUID_Detail{
+		UUID: in.Id,
+		Name: "User",
+	})
 
-		err_uuid := helpers.IsValidUUID(helpers.UUID_Data)
-		if err_uuid != nil {
-			helpers.Errorf(err_uuid.Error())
-			log.Print(&helpers.Buf)
-			return user_ctrl.Response, status.Errorf(codes.InvalidArgument, err_uuid.Error())
-		}
-		res_user, err_user := userServer.user_ctrl.Get_one_by_user_id_Controller(in.Id)
-		if err_user != nil {
-			helpers.Errorf(err_user.Error())
-			log.Print(&helpers.Buf)
-			return user_ctrl.Response, status.Errorf(codes.NotFound, err_user.Error())
-		}
-		new_name = res_user.Name
-		new_image_url = res_user.Image_Url
+	err_uuid := helpers.IsValidUUID(helpers.UUID_Data)
+	if err_uuid != nil {
+		helpers.Errorf(err_uuid.Error())
+		log.Print(&helpers.Buf)
+		return user_ctrl.Response, status.Errorf(codes.InvalidArgument, err_uuid.Error())
 	}
+	res_user, err_user := userServer.user_ctrl.Get_one_by_user_id_Controller(in.Id)
+	if err_user != nil {
+		helpers.Errorf(err_user.Error())
+		log.Print(&helpers.Buf)
+		return user_ctrl.Response, status.Errorf(codes.NotFound, err_user.Error())
+	}
+	new_name = res_user.Name
+	new_image_url = res_user.Image_Url
 
 	if in.Name != "" {
 		new_name = in.Name
@@ -172,7 +170,7 @@ func (userServer *ManagementServer) Update(ctx context.Context, in *pb_user.Requ
 		new_image_url = in.ImageUrl
 	}
 
-	res_user, err_user := userServer.user_ctrl.Update(in.Id, new_name, new_image_url)
+	res_user_update, err_user := userServer.user_ctrl.Update(in.Id, new_name, new_image_url)
 	if err_user != nil {
 		helpers.Errorf(err_user.Error())
 		log.Print(&helpers.Buf)
@@ -182,11 +180,11 @@ func (userServer *ManagementServer) Update(ctx context.Context, in *pb_user.Requ
 	user_ctrl.Response.Message = &pb_user.Message{Message: "Successfully Operation"}
 	user_ctrl.Response.Meta = &pb_user.Meta{Total: 1, TotalPage: 1}
 	user_ctrl.Response.Users = []*pb_user.Data_Users{{
-		Id:        res_user.Id.String(),
-		Name:      res_user.Name,
-		ImageUrl:  res_user.Image_Url,
-		CreatedAt: res_user.CreatedAt.Local().String(),
-		UpdatedAt: res_user.UpdatedAt.Local().String(),
+		Id:        res_user_update.Id.String(),
+		Name:      res_user_update.Name,
+		ImageUrl:  res_user_update.Image_Url,
+		CreatedAt: res_user_update.CreatedAt.Local().String(),
+		UpdatedAt: res_user_update.UpdatedAt.Local().String(),
 	}}
 
 	return user_ctrl.Response, nil
@@ -199,18 +197,16 @@ func (userServer *ManagementServer) Delete(ctx context.Context, in *pb_user.Requ
 	user_ctrl.Response = &pb_user.Response{}
 	helpers.UUID_Data = []helpers.UUID_Detail{}
 
-	if in.Id != "" {
-		helpers.UUID_Data = append(helpers.UUID_Data, helpers.UUID_Detail{
-			UUID: in.Id,
-			Name: "User",
-		})
+	helpers.UUID_Data = append(helpers.UUID_Data, helpers.UUID_Detail{
+		UUID: in.Id,
+		Name: "User",
+	})
 
-		err_uuid := helpers.IsValidUUID(helpers.UUID_Data)
-		if err_uuid != nil {
-			helpers.Errorf(err_uuid.Error())
-			log.Print(&helpers.Buf)
-			return user_ctrl.Response, status.Errorf(codes.InvalidArgument, err_uuid.Error())
-		}
+	err_uuid := helpers.IsValidUUID(helpers.UUID_Data)
+	if err_uuid != nil {
+		helpers.Errorf(err_uuid.Error())
+		log.Print(&helpers.Buf)
+		return user_ctrl.Response, status.Errorf(codes.InvalidArgument, err_uuid.Error())
 	}
 
 	res_user, err_user := userServer.user_ctrl.Delete(in.Id)
