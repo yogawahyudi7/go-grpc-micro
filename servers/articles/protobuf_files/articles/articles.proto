@@ -45,7 +45,7 @@ message Response{
     Message message = 3;
 }
 
-service Users{
+service Articles{
     rpc Create(Request) returns (Response);
     rpc Read(Request) returns (Response);
     rpc Update(Request) returns (Response);

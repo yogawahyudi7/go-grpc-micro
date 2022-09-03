@@ -18,194 +18,194 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// UsersClient is the client API for Users service.
+// ArticlesClient is the client API for Articles service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UsersClient interface {
+type ArticlesClient interface {
 	Create(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	Read(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
-type usersClient struct {
+type articlesClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUsersClient(cc grpc.ClientConnInterface) UsersClient {
-	return &usersClient{cc}
+func NewArticlesClient(cc grpc.ClientConnInterface) ArticlesClient {
+	return &articlesClient{cc}
 }
 
-func (c *usersClient) Create(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *articlesClient) Create(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/articles.Users/Create", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/articles.Articles/Create", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usersClient) Read(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *articlesClient) Read(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/articles.Users/Read", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/articles.Articles/Read", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usersClient) Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *articlesClient) Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/articles.Users/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/articles.Articles/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usersClient) Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *articlesClient) Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/articles.Users/Delete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/articles.Articles/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UsersServer is the server API for Users service.
-// All implementations must embed UnimplementedUsersServer
+// ArticlesServer is the server API for Articles service.
+// All implementations must embed UnimplementedArticlesServer
 // for forward compatibility
-type UsersServer interface {
+type ArticlesServer interface {
 	Create(context.Context, *Request) (*Response, error)
 	Read(context.Context, *Request) (*Response, error)
 	Update(context.Context, *Request) (*Response, error)
 	Delete(context.Context, *Request) (*Response, error)
-	mustEmbedUnimplementedUsersServer()
+	mustEmbedUnimplementedArticlesServer()
 }
 
-// UnimplementedUsersServer must be embedded to have forward compatible implementations.
-type UnimplementedUsersServer struct {
+// UnimplementedArticlesServer must be embedded to have forward compatible implementations.
+type UnimplementedArticlesServer struct {
 }
 
-func (UnimplementedUsersServer) Create(context.Context, *Request) (*Response, error) {
+func (UnimplementedArticlesServer) Create(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedUsersServer) Read(context.Context, *Request) (*Response, error) {
+func (UnimplementedArticlesServer) Read(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Read not implemented")
 }
-func (UnimplementedUsersServer) Update(context.Context, *Request) (*Response, error) {
+func (UnimplementedArticlesServer) Update(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedUsersServer) Delete(context.Context, *Request) (*Response, error) {
+func (UnimplementedArticlesServer) Delete(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
+func (UnimplementedArticlesServer) mustEmbedUnimplementedArticlesServer() {}
 
-// UnsafeUsersServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UsersServer will
+// UnsafeArticlesServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ArticlesServer will
 // result in compilation errors.
-type UnsafeUsersServer interface {
-	mustEmbedUnimplementedUsersServer()
+type UnsafeArticlesServer interface {
+	mustEmbedUnimplementedArticlesServer()
 }
 
-func RegisterUsersServer(s grpc.ServiceRegistrar, srv UsersServer) {
-	s.RegisterService(&Users_ServiceDesc, srv)
+func RegisterArticlesServer(s grpc.ServiceRegistrar, srv ArticlesServer) {
+	s.RegisterService(&Articles_ServiceDesc, srv)
 }
 
-func _Users_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Articles_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsersServer).Create(ctx, in)
+		return srv.(ArticlesServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/articles.Users/Create",
+		FullMethod: "/articles.Articles/Create",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).Create(ctx, req.(*Request))
+		return srv.(ArticlesServer).Create(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Users_Read_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Articles_Read_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsersServer).Read(ctx, in)
+		return srv.(ArticlesServer).Read(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/articles.Users/Read",
+		FullMethod: "/articles.Articles/Read",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).Read(ctx, req.(*Request))
+		return srv.(ArticlesServer).Read(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Users_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Articles_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsersServer).Update(ctx, in)
+		return srv.(ArticlesServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/articles.Users/Update",
+		FullMethod: "/articles.Articles/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).Update(ctx, req.(*Request))
+		return srv.(ArticlesServer).Update(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Users_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Articles_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsersServer).Delete(ctx, in)
+		return srv.(ArticlesServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/articles.Users/Delete",
+		FullMethod: "/articles.Articles/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).Delete(ctx, req.(*Request))
+		return srv.(ArticlesServer).Delete(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Users_ServiceDesc is the grpc.ServiceDesc for Users service.
+// Articles_ServiceDesc is the grpc.ServiceDesc for Articles service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Users_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "articles.Users",
-	HandlerType: (*UsersServer)(nil),
+var Articles_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "articles.Articles",
+	HandlerType: (*ArticlesServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Create",
-			Handler:    _Users_Create_Handler,
+			Handler:    _Articles_Create_Handler,
 		},
 		{
 			MethodName: "Read",
-			Handler:    _Users_Read_Handler,
+			Handler:    _Articles_Read_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _Users_Update_Handler,
+			Handler:    _Articles_Update_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _Users_Delete_Handler,
+			Handler:    _Articles_Delete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
